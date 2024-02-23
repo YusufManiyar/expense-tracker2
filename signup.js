@@ -14,11 +14,29 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ username, email, password })
-      }).then((req, res) => {
-        console.log(res)
+      }).then(async (res) => {
+        const data = await res.json()
+       alert( data.message)
       })
     } catch (error) {
       console.error('Error:', error);
     }
   });
+// script.js
+document.getElementById('togglePassword').addEventListener('click', () => {
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('togglePassword');
+  
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      eyeIcon.classList.remove('fa-eye');
+      eyeIcon.classList.add('fa-eye-slash');
+    } else {
+      passwordInput.type = 'password';
+      eyeIcon.classList.remove('fa-eye-slash');
+      eyeIcon.classList.add('fa-eye');
+    }
+  });
+  
+  
   

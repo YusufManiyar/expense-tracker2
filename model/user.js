@@ -1,9 +1,6 @@
 // models/user.js
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('expense_tracker', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql'
-});
+const { DataTypes } = require('sequelize');
+const sequelize = require('../utils/data-config.js');
 
 const User = sequelize.define('User', {
   username: {
@@ -21,4 +18,4 @@ const User = sequelize.define('User', {
   }
 });
 
-module.exports = { sequelize, User };
+module.exports = User;
