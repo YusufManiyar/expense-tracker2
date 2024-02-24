@@ -8,7 +8,7 @@ module.exports = {
           res.status(201).json(newUser);
           // res.status(201).json({message: "User Successfully Created"})
         } catch (error) {
-            console.log("error", error)
+            // console.log("error", error)
           res.status(400).json({ message: error.errors && error.errors.length > 0 ? error.errors[0].message : error.toString()});
         }
       },

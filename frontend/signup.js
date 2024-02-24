@@ -17,7 +17,11 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
       }).then(async (res) => {
         const data = await res.json()
         localStorage.setItem("userDetail", JSON.stringify(data))
-       alert("User Create Successfully")
+        if(res.status === 400){
+          alert(data.message)
+        } else {
+          alert("User Create Successfully")
+        }
       })
     } catch (error) {
       console.error('Error:', error);
