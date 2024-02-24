@@ -1,4 +1,4 @@
-/* styles.css
+/* styles.css*/
 body{
     background: rgb(49,203,165);
     background: linear-gradient(90deg, rgba(49,203,165,1) 6%, rgba(0,255,247,0.49343487394957986) 21%, rgba(22,213,207,0.4234068627450981) 50%, rgba(20,191,186,0.5634628851540616) 62%, rgba(0,0,0,0) 79%);
@@ -6,7 +6,7 @@ body{
     background-position: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f3f3f3;
-} */
+} 
 
 .container {
     max-width: 400px;

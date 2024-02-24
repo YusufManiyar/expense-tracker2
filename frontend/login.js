@@ -1,29 +1,35 @@
 // script.js
-document.getElementById('signupForm').addEventListener('submit', async (e) => {
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
   
     const formData = new FormData(e.target);
-    const username = formData.get('username');
     const email = formData.get('email');
     const password = formData.get('password');
   
     try {
-      const response = await fetch('http://localhost:4000/signup', {
+      const response = await fetch('http://localhost:4000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, email, password })
-      }).then(async (res) => {
-        const data = await res.json()
-       alert( data.message)
-      })
+        body: JSON.stringify({ email, password })
+      });
+
+      console.log(response)
+      const data = await response.json();
+      localStorage.setItem("userDetail",JSON.stringify(data))
+      if(response.status === 401){
+        alert(data.message)
+      }else if(response.status === 200){
+        alert(`Welcome ${data.username} Sucessfully LogIn`)
+      }
     } catch (error) {
+       alert(error)
       console.error('Error:', error);
     }
   });
-// script.js
-document.getElementById('togglePassword').addEventListener('click', () => {
+  
+  document.getElementById('togglePassword').addEventListener('click', () => {
     const passwordInput = document.getElementById('password');
     const eyeIcon = document.getElementById('togglePassword');
   
@@ -37,6 +43,3 @@ document.getElementById('togglePassword').addEventListener('click', () => {
       eyeIcon.classList.add('fa-eye');
     }
   });
-  
-  
-  

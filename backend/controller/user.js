@@ -6,9 +6,10 @@ module.exports = {
           const { username, email, password } = req.body;
           const newUser = await User.create({ username, email, password });
           res.status(201).json(newUser);
+          // res.status(201).json({message: "User Successfully Created"})
         } catch (error) {
-            // console.log("error", error)
-          res.status(400).json({ message: error.errors[0].message});
+            console.log("error", error)
+          res.status(400).json({ message: error.errors && error.errors.length > 0 ? error.errors[0].message : error.toString()});
         }
       },
 
@@ -21,7 +22,7 @@ module.exports = {
             res.status(200).json(user);
           } else {
             // Invalid credentials
-            res.status(401).json({ message: 'Invalid username or password' });
+            res.status(401).json({ message: 'Invalid email or password' });
           }
         } catch (error) {
           res.status(400).json({ message: error.message });

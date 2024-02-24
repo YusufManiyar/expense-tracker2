@@ -1,0 +1,59 @@
+body{
+    background: rgb(49,203,165);
+    background: linear-gradient(90deg, rgba(49,203,165,1) 6%, rgba(0,255,247,0.49343487394957986) 21%, rgba(22,213,207,0.4234068627450981) 50%, rgba(20,191,186,0.5634628851540616) 62%, rgba(0,0,0,0) 79%);
+    background-size: cover;
+    background-position: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f3f3f3;
+} 
+
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  input {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 15px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* styles.css */
+.password-input {
+    position: relative;
+  }
+  
+  /* .password-input input[type="password"] {
+    padding-right: 35px;
+  } */
+  
+  .password-input i {
+    position: absolute;
+    top: 40%;
+    right: 50px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
