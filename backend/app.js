@@ -17,7 +17,7 @@ app.use('/', userRoute);
 app.use('/', expenseRouter)
 
 // Start server
-sequelize.sync().then(() => {
+sequelize.sync({focus: true}).then(() => {
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });

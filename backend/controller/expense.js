@@ -19,7 +19,6 @@ module.exports = {
         try {
             const { userId, description, category, amount } = req.body;
             const newExpense = await Expense.create({userId, description, category, amount });
-            console.log(newExpense)
             res.status(201).json(newExpense);
         } catch (error) {
             res.status(400).json({ message: error.message });
