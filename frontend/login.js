@@ -17,11 +17,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
       console.log(response)
       const data = await response.json();
-      localStorage.setItem("userDetail",JSON.stringify(data))
+      localStorage.setItem("userid",JSON.stringify(data.id))
       if(response.status === 401){
         alert(data.message)
       }else if(response.status === 200){
         alert(`Welcome ${data.username} Sucessfully LogIn`)
+        window.location.href= 'home.html'
       }
     } catch (error) {
        alert(error)

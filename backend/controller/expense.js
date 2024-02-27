@@ -1,0 +1,49 @@
+const Expense = require('../model/expense.js')
+
+module.exports = {
+    fetch : async (req, res) => {
+        try {
+            const { userid } = req.query;
+            const expenses = await Expense.findAll({
+                where: {
+                  userId: userid
+                }
+              });
+            res.status(200).json(expenses);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
+    add :async (req, res) => {
+        try {
+            const { userId, description, category, amount } = req.body;
+            const newExpense = await Expense.create({userId, description, category, amount });
+            console.log(newExpense)
+            res.status(201).json(newExpense);
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    },
+
+    update : async (req, res) => {
+        try {
+          const expenseId = req.params.expenseId;
+          const { description,category, amount } = req.body;
+          const updatedExpense = await Expense.update({ description,category, amount }, { where: { id: expenseId } });
+          res.status(200).json(updatedExpense);
+        } catch (error) {
+          res.status(400).json({ message: error.message });
+        }
+    },
+
+    delete :  async (req, res) => {
+        try {
+          const {id, userid} = req.body;
+          await Expense.destroy({ where: { id: id,  userId: userid } });
+          res.status(204).end();
+        } catch (error) {
+          res.status(400).json({ message: error.message });
+        }
+    },
+}

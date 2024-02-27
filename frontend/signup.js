@@ -16,11 +16,12 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
         body: JSON.stringify({ username, email, password })
       }).then(async (res) => {
         const data = await res.json()
-        localStorage.setItem("userDetail", JSON.stringify(data))
+        localStorage.setItem("userid", JSON.stringify(data.id))
         if(res.status === 400){
           alert(data.message)
         } else {
           alert("User Create Successfully")
+          window.location.href= 'home.html'
         }
       })
     } catch (error) {
