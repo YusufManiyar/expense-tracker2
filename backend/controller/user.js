@@ -1,10 +1,28 @@
 const User = require('../model/user.js');
 
+const bcrypt = require('bcrypt');
+
+// Function to hash a password
+async function hashPassword(password) {
+  try {
+    // Generate a salt
+    const salt = await bcrypt.genSalt(10);
+    // Hash the password with the salt
+    const hashedPassword = await bcrypt.hash(password, salt);
+    return hashedPassword;
+  } catch (error) {
+    throw new Error('Error hashing password');
+  }
+}
+
+
 module.exports = {
     signup : async (req, res) => {
         try {
           const { username, email, password } = req.body;
-          const newUser = await User.create({ username, email, password });
+          const hashPass = await hashPassword(password)
+          console.log(hashPass)
+          const newUser = await User.create({ username, email, password: hashPass });
           res.status(201).json(newUser);
           // res.status(201).json({message: "User Successfully Created"})
         } catch (error) {
@@ -16,8 +34,13 @@ module.exports = {
     login : async (req, res) => {
         try {
           const { email, password } = req.body;
-          const user = await User.findOne({ where: { email, password } });
-          if (user) {
+          const user = await User.findOne({ where: { email } });
+          let match = false
+          if(user){
+            match = await bcrypt.compare(password, user.password)
+          }
+          
+          if (match) {
             // Successful login
             res.status(200).json(user);
           } else {
