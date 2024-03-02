@@ -1,4 +1,5 @@
 const User = require('../model/user.js');
+const jwt = require('jsonwebtoken')
 
 const bcrypt = require('bcrypt');
 
@@ -17,13 +18,14 @@ async function hashPassword(password) {
 
 
 module.exports = {
-    signup : async (req, res) => {
+    signup : async (req, res, next) => {
         try {
           const { username, email, password } = req.body;
           const hashPass = await hashPassword(password)
           console.log(hashPass)
           const newUser = await User.create({ username, email, password: hashPass });
-          res.status(201).json(newUser);
+          req.body = {id: newUser.id}
+          next()
           // res.status(201).json({message: "User Successfully Created"})
         } catch (error) {
             // console.log("error", error)
@@ -31,7 +33,7 @@ module.exports = {
         }
       },
 
-    login : async (req, res) => {
+    login : async (req, res, next) => {
         try {
           const { email, password } = req.body;
           const user = await User.findOne({ where: { email } });
@@ -42,7 +44,9 @@ module.exports = {
           
           if (match) {
             // Successful login
-            res.status(200).json(user);
+            req.body = {id: user.id}
+            // res.json(user)
+            next()
           } else {
             // Invalid credentials
             res.status(401).json({ message: 'Invalid email or password' });

@@ -1,6 +1,6 @@
 // models/user.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../utils/data-config.js');
+const sequelize = require('../utils/data-config.js')
 
 const User = sequelize.define('User', {
   username: {
@@ -15,7 +15,12 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  ispremiumactive: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 });
+
 
 module.exports = User;

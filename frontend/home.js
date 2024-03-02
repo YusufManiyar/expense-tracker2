@@ -11,8 +11,48 @@ if(localStorage.getItem('userid') !== null){
         const expenseForm = document.getElementById('expenseForm');
         const expenseList = document.getElementById('expenseList');
         const totalExpense = document.getElementById('totalExpense');
+        const purchase = document.getElementById('purchase-button')
+
+        purchase.addEventListener('click', async function(event) {
+            const token = localStorage.getItem('token')
+            
+            const response = await fetch('http://localhost:4000/purchase/premiummembership', {headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              }
+            })
+            const data = await response.json()
+            console.log('purchase data', data)
+
+            var options = {
+                key_id: data.key_id,
+                order_id: data.order.id,
+                handler: async function(response) {
+                    const resp = await fetch('http://localhost:4000/purchase/updatetransationstatus', {method:'POST', headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                      },
+                      body: JSON.stringify(
+                        {
+                            order_id: options.order_id,
+                            payment_id: response.razorpay_payment_id
+                        }
+                        )
+                    })
+                    console.log('order data', await resp.json())
+                }
+            }
+
+            let rzp = new Razorpay(options)
+            rzp.open()
+            event.preventDefault();
+            
+            rzp.on('payment.failed', (response)=> {
+                alert('Payment failed! Please try again')
+            })
+        })
     
-        expenseForm.addEventListener('submit', function(event) {
+        expenseForm.addEventListener('submit', async function(event) {
             event.preventDefault();
     
             const description = document.getElementById('description').value;
@@ -21,7 +61,7 @@ if(localStorage.getItem('userid') !== null){
     
             if (description.trim() && category && amount) {
                 // addExpense(description, amount);
-                saveExpense(description, category, amount);
+                await saveExpense(description, category, amount);
                 document.getElementById('description').value = '';
                 document.getElementById('category').value = '';
                 document.getElementById('amount').value = '';
@@ -45,31 +85,54 @@ if(localStorage.getItem('userid') !== null){
             expenseList.appendChild(li);
         }
     
-        function saveExpense(description, category, amount) {
-            let user_id = localStorage.getItem('userid')
-            transaction = {
-                userId: user_id,
+        async function saveExpense(description, category, amount) {
+            const mode = expenseForm.getAttribute('mode')
+            let token = localStorage.getItem('token')
+            const transaction = {
                 description: description,
                 category: category,
                 amount: amount
             }
-            fetch('http://localhost:4000/expense', {method: 'POST', headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(transaction),
-            }).then(resp => resp.json())
-            .then(data => addExpense(data))
+
+            let data
+            if(mode == 'add') {
+                const response = await fetch('http://localhost:4000/expense', {method: 'POST', headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                  },
+                  body: JSON.stringify(transaction),
+                })
+                data = await response.json()
+            }
+            else {
+                transaction.id = expenseForm.getAttribute('transactionId')
+
+                expenseForm.removeAttribute('transactionId')
+                expenseForm.setAttribute('mode', 'add')
+
+                const response = await fetch('http://localhost:4000/expense', {method: 'PUT', headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                  },
+                  body: JSON.stringify(transaction),
+                })
+                data = await response.json()
+            }
+
+            addExpense(data)
 
         }
     
         function loadExpenses() {
-            const userid = localStorage.getItem('userid')
-            fetch(`http://localhost:4000/expense?userid=${userid}`, {method: 'GET', headers: {
-                'Content-Type': 'application/json'
+
+            fetch(`http://localhost:4000/expense`, {method: 'GET', headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
               },
             }).then(resp => resp.json())
-            .then(data => data && data.forEach(data => {
-                addExpense({id: data.id, description: data.description,category: data.category, amount: data.amount});
+            .then(data => data && data.forEach(expense => {
+                console.log(expense)
+                addExpense({id: expense.id, description: expense.description,category: expense.category, amount: expense.amount});
             }))
         }
     
@@ -91,6 +154,9 @@ if(localStorage.getItem('userid') !== null){
                 document.getElementById('description').value = description;
                 document.getElementById('category').value = category;
                 document.getElementById('amount').value = amount;
+                expenseForm.setAttribute('transactionId', item.id)
+                expenseForm.setAttribute('mode', 'update')
+
             //     const list = {
             //         userid: userid,
             //         id: item.id,
@@ -108,15 +174,15 @@ if(localStorage.getItem('userid') !== null){
         });
     
         function deleteExpense(id) {
-            let userid = JSON.parse(localStorage.getItem('userid'));
+            let token = localStorage.getItem('token');
             const idObj = {
                 id: id,
-                userid: userid
             }
-            let amount = parseFloat(document.getElementById('amountValue').textContent.slice(1))
+            // let amount = parseFloat(document.getElementById('amountValue').textContent.slice(1))
     
             fetch(`http://localhost:4000/expense`, {method: 'DELETE', headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
               },
               body: JSON.stringify(idObj),
             })

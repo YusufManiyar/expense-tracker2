@@ -8,16 +8,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
+    <nav>
     <div>
         <button id="logout-button">
             <svg height="48" viewBox="0 0 48 48" width="40" xmlns="http://www.w3.org/2000/svg"><path d="m33.749 7.759-.93 1.55a1 1 0 0 0 .314 1.339 16.2 16.2 0 1 1 -18.258 0 1 1 0 0 0 .313-1.338l-.926-1.546a1.012 1.012 0 0 0 -1.418-.334 20 20 0 1 0 22.315 0 1 1 0 0 0 -1.41.329z"/><rect height="20" rx="1" width="4" x="20" y="2"/></svg>
         </button>
     </div>
+    <div>
+        <form id="purchase-button"><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_N8EXjGJZPJdgqG" async> </script> </form>
+        <!-- <button id="buy-premium">
+           Buy Premium
+        </button> -->
+    </div>
+    </nav>
+    <!-- <iframe src="https://rzp.io/l/KoGZHLoflq" width="100%" height="500px" frameborder="0"></iframe> -->
+
     <div class="container">
         <div id="form-container">
         <h1>Expense Tracker</h1>
         <div id="totalExpense"></div>
-        <form id="expenseForm">
+        <form id="expenseForm" mode="add">
             <label for="description">Description:</label>
             <input type="text" id="description" name="description" placeholder="Enter description" required>
             <label for="category">Category:</label>
@@ -42,7 +52,7 @@
             </div>
         </div>
     </div>
-
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="./home.js">
     </script>
 </body>

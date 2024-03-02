@@ -10,20 +10,22 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       const response = await fetch('http://localhost:4000/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password })
       });
 
-      console.log(response)
-      const data = await response.json();
-      localStorage.setItem("userid",JSON.stringify(data.id))
-      if(response.status === 401){
-        alert(data.message)
-      }else if(response.status === 200){
-        alert(`Welcome ${data.username} Sucessfully LogIn`)
+      const { token } = await response.json()
+      
+      console.log('header', token)
+      // const data = await response.json();
+      localStorage.setItem('token', token)
+      // if(response.status === 401){
+      //   alert(data.message)
+      // }else if(response.status === 200){
+      //   alert(`Welcome ${data.username} Sucessfully LogIn`)
         window.location.href= 'home.html'
-      }
+      // }
     } catch (error) {
        alert(error)
       console.error('Error:', error);

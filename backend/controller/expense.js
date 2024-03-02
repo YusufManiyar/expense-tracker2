@@ -3,10 +3,10 @@ const Expense = require('../model/expense.js')
 module.exports = {
     fetch : async (req, res) => {
         try {
-            const { userid } = req.query;
+            const userId = req.user.id
             const expenses = await Expense.findAll({
                 where: {
-                  userId: userid
+                  userId: userId
                 }
               });
             res.status(200).json(expenses);
@@ -17,19 +17,22 @@ module.exports = {
 
     add :async (req, res) => {
         try {
-            const { userId, description, category, amount } = req.body;
+            const { description, category, amount } = req.body;
+            const userId = req.user.id
             const newExpense = await Expense.create({userId, description, category, amount });
             res.status(201).json(newExpense);
         } catch (error) {
+          console.log(error)
             res.status(400).json({ message: error.message });
         }
     },
 
     update : async (req, res) => {
         try {
-          const expenseId = req.params.expenseId;
-          const { description,category, amount } = req.body;
-          const updatedExpense = await Expense.update({ description,category, amount }, { where: { id: expenseId } });
+
+          const { id, description,category, amount } = req.body;
+          await Expense.update({ description,category, amount }, { where: { id: id } });
+          const updatedExpense = await Expense.findByPk(id);
           res.status(200).json(updatedExpense);
         } catch (error) {
           res.status(400).json({ message: error.message });
@@ -38,9 +41,10 @@ module.exports = {
 
     delete :  async (req, res) => {
         try {
-          const {id, userid} = req.body;
-          await Expense.destroy({ where: { id: id,  userId: userid } });
-          res.status(204).end();
+          const {id} = req.body;
+          const userId = req.user.id
+          await Expense.destroy({ where: { id: id,  userId: userId } });
+          res.status(204).json({message: 'deleted successfully'});
         } catch (error) {
           res.status(400).json({ message: error.message });
         }
