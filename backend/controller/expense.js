@@ -9,7 +9,7 @@ module.exports = {
                   userId: userId
                 }
               });
-            res.status(200).json(expenses);
+            res.status(200).json({expenses: expenses, isPremiumActive: req.user.ispremiumactive});
         } catch (error) {
             res.status(500).json({ message: error.message });
         }

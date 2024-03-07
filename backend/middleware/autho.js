@@ -18,10 +18,10 @@ module.exports = {
     },
 
     generateToken:  (req, res, next) => {
-        const { id } = req.body
-        const token =  jwt.sign(id, SECRET_KEY)
+        const { id , ispremiumactive} = req.body
+        const token =  jwt.sign(id, 'VHHZXBluiahY3A8EC7AGOC8WDO8gRC87')
         
         res.setHeader('Authorization', 'Bearer ' + token)
-        res.status(200).json({token})
+        res.status(200).json({token, ispremiumactive})
     }
 }

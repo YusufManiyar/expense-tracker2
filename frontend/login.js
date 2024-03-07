@@ -15,11 +15,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         body: JSON.stringify({ email, password })
       });
 
-      const { token } = await response.json()
+      const { token, ispremiumactive } = await response.json()
       
       console.log('header', token)
       // const data = await response.json();
-      localStorage.setItem('token', token)
+      localStorage.setItem('token', token )
+      localStorage.setItem('premiumActive', ispremiumactive )
       // if(response.status === 401){
       //   alert(data.message)
       // }else if(response.status === 200){

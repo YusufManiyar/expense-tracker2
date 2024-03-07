@@ -7,6 +7,7 @@ const { sequelize, User } = require('./model/user.js');
 const userRoute = require('./routes/user.js')
 const expenseRouter = require('./routes/expense.js')
 const purchaseRouter = require('./routes/purchase.js')
+const leaderboardRouter = require('./routes/leaderboard.js')
 
 
 const app = express();
@@ -21,6 +22,11 @@ app.use(express.json());
 app.use('/', userRoute);
 app.use('/', expenseRouter)
 app.use('/', purchaseRouter)
+// Assuming you have a User and Expense model with associations
+
+// Route to fetch leaderboard data
+app.use('/premium', leaderboardRouter)
+
 
 // Start server
 sequelize.sync({focus: true}).then(() => {

@@ -16,7 +16,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
         body: JSON.stringify({ username, email, password })
       }).then(async (res) => {
         const data = await res.json()
-        localStorage.setItem("userid", JSON.stringify(data.id))
+        localStorage.setItem("token", JSON.stringify(data.token))
         if(res.status === 400){
           alert(data.message)
         } else {

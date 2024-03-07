@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard</title>
+  <style>
+  /* Styles for the leaderboard table */
+#leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#leaderboard-table th,
+#leaderboard-table td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+#leaderboard-table th {
+  background-color: #f2f2f2;
+}
+
+#leaderboard-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#leaderboard-table tbody tr:hover {
+  background-color: #ddd;
+}
+
+  </style>
+</head>
+<body>
+  <button id="home">Home</button>
+  <table id="leaderboard-table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Total Expense</th>
+      </tr>
+    </thead>
+    <tbody id="leaderboard-body">
+      <!-- Leaderboard data will be inserted here -->
+    </tbody>
+  </table>
+
+  <script>
+    document.getElementById('show-leaderboard')
+        const token = localStorage.getItem("token")
+
+        async function show() {
+            try {
+        const response = await fetch('http://localhost:4000/premium/leaderboard', {headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              }
+            });
+        const data = await response.json();
+        console.log(data)
+
+        const leaderboardBody = document.getElementById('leaderboard-body');
+        leaderboardBody.innerHTML = ''; // Clear previous data
+
+        data.forEach((user) => {
+          const row = `<tr><td>${user.name}</td><td>${user.totalExpense}</td></tr>`;
+          leaderboardBody.insertAdjacentHTML('beforeend', row);
+        });
+      } catch (error) {
+        console.error('Error fetching leaderboard data:', error);
+      }
+        }
+
+        show()
+
+      const home = document.getElementById('home').addEventListener('click', () => window.location.href = 'home.html')
+  </script>
+</body>
+</html>

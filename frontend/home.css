@@ -197,17 +197,20 @@ label {
 }
 
 input[type="text"],
-input[type="number"],
+input[type="number"]{
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 90%; /* Make input fields span full width */
+}
+
 select {
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    width: 100%; /* Make input fields span full width */
-}
-
-input[type="number"] {
-    width: calc(100% - 6px);
+    width: 95%;
 }
 
 button {
@@ -310,5 +313,25 @@ nav {
 
 #purchase-button {
     cursor: pointer;
-    margin-top: 2rem;
+    margin-top: 3rem;
+}
+
+#premium-account{
+    display: none;
+    margin-top: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#leaderboard{
+    display: none;
+    margin-top: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#premium-logo {
+    margin-bottom: -12px;
 }

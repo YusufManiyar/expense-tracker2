@@ -1,10 +1,38 @@
 const logout = document.getElementById('logout-button');
 logout.addEventListener('click', function(){
     window.location.href = 'login.html'
-    localStorage.removeItem('userid')
+    localStorage.clear()
+    // localStorage.removeItem('token')
+    // localStorage.removeItem('premiumActive')
 })
 
-if(localStorage.getItem('userid') !== null){
+if(localStorage.getItem('token') !== null){
+    
+
+    function ispremium() {
+        const premiumActive = localStorage.getItem('premiumActive');
+    
+        if (premiumActive === 'true') {
+            // Log the value of 'premiumActive'
+            toggleElementDisplay('premium', 'none');
+            toggleElementDisplay('premium-account', 'flex');
+            toggleElementDisplay('leaderboard', 'block')
+        } else {
+            toggleElementDisplay('leaderboard', 'none')
+            toggleElementDisplay('premium', 'block');
+            toggleElementDisplay('premium-account', 'none');
+        }
+    }
+    
+    function toggleElementDisplay(elementId, displayValue) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.style.display = displayValue;
+        } else {
+            console.error(`Element with ID '${elementId}' not found.`);
+        }
+    }
+    
     
     document.addEventListener("DOMContentLoaded", function() {
         let totalExpenses = 0
@@ -12,6 +40,9 @@ if(localStorage.getItem('userid') !== null){
         const expenseList = document.getElementById('expenseList');
         const totalExpense = document.getElementById('totalExpense');
         const purchase = document.getElementById('purchase-button')
+        const leaderboard = document.getElementById('leaderboard')
+
+        leaderboard.addEventListener('click', () =>  window.location.href= 'leaderboard.html')
 
         purchase.addEventListener('click', async function(event) {
             const token = localStorage.getItem('token')
@@ -22,8 +53,6 @@ if(localStorage.getItem('userid') !== null){
               }
             })
             const data = await response.json()
-            console.log('purchase data', data)
-
             var options = {
                 key_id: data.key_id,
                 order_id: data.order.id,
@@ -39,6 +68,9 @@ if(localStorage.getItem('userid') !== null){
                         }
                         )
                     })
+                    const data = await resp.json()
+                    localStorage.setItem('premiumActive', data.isPremiumActive)
+                    ispremium()
                     console.log('order data', await resp.json())
                 }
             }
@@ -122,7 +154,6 @@ if(localStorage.getItem('userid') !== null){
             addExpense(data)
 
         }
-    
         function loadExpenses() {
 
             fetch(`http://localhost:4000/expense`, {method: 'GET', headers: {
@@ -130,12 +161,14 @@ if(localStorage.getItem('userid') !== null){
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               },
             }).then(resp => resp.json())
-            .then(data => data && data.forEach(expense => {
-                console.log(expense)
+            .then((data) => {
+                data && data.expenses.forEach(expense => {
                 addExpense({id: expense.id, description: expense.description,category: expense.category, amount: expense.amount});
-            }))
+                localStorage.setItem('premiumActive', data.isPremiumActive)
+            })})
         }
     
+        ispremium()
         loadExpenses();
     
         expenseList.addEventListener('click', function(event) {
