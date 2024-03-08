@@ -16,16 +16,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       });
 
       const { token, ispremiumactive } = await response.json()
-      
-      console.log('header', token)
       // const data = await response.json();
       localStorage.setItem('token', token )
       localStorage.setItem('premiumActive', ispremiumactive )
-      // if(response.status === 401){
-      //   alert(data.message)
-      // }else if(response.status === 200){
-      //   alert(`Welcome ${data.username} Sucessfully LogIn`)
+      if(response.ok){
         window.location.href= 'home.html'
+      }
       // }
     } catch (error) {
        alert(error)

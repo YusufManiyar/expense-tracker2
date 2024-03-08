@@ -46,7 +46,6 @@ if(localStorage.getItem('token') !== null){
 
         purchase.addEventListener('click', async function(event) {
             const token = localStorage.getItem('token')
-            
             const response = await fetch('http://localhost:4000/purchase/premiummembership', {headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -71,17 +70,19 @@ if(localStorage.getItem('token') !== null){
                     const data = await resp.json()
                     localStorage.setItem('premiumActive', data.isPremiumActive)
                     ispremium()
-                    console.log('order data', await resp.json())
+                    document.getElementsByClassName('razorpay-payment-form-container')[0].style.display = 'none'
                 }
             }
 
             let rzp = new Razorpay(options)
             rzp.open()
+
             event.preventDefault();
             
             rzp.on('payment.failed', (response)=> {
                 alert('Payment failed! Please try again')
             })
+
         })
     
         expenseForm.addEventListener('submit', async function(event) {

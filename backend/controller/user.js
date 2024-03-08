@@ -23,12 +23,10 @@ module.exports = {
           const { username, email, password } = req.body;
           const hashPass = await hashPassword(password)
           const newUser = await User.create({ username, email, password: hashPass });
-          console.log(newUser)
+
           req.body = {id: newUser.id, ispremiumactive:newUser.ispremiumactive}
           next()
-          // res.status(201).json({message: "User Successfully Created"})
         } catch (error) {
-            // console.log("error", error)
           res.status(400).json({ message: error.errors && error.errors.length > 0 ? error.errors[0].message : error.toString()});
         }
       },
@@ -43,7 +41,6 @@ module.exports = {
           }
           
           if (match) {
-            console.log("ispremium",user.ispremiumactive)
             // Successful login
             req.body = {id: user.id, ispremiumactive: user.ispremiumactive}
             // res.json(user)

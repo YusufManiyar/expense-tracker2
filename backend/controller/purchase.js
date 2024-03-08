@@ -15,7 +15,7 @@ module.exports = {
            rzp.orders.create({amount, currency: 'INR'}, async (err, order) => {
 
             if(err) {
-                console.log('err1=> ',err)
+                console.log('err=> ',err)
                 throw new Error(JSON.stringify(err))
             }
             await req.user.createOrder({orderid: order.id, status: 'PENDING'})
