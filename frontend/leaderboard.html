@@ -64,7 +64,7 @@
         leaderboardBody.innerHTML = ''; // Clear previous data
 
         data.forEach((user) => {
-            const row = `<tr><td>${user['User.username']}</td><td>${user.totalExpense}</td></tr>`;
+            const row = `<tr><td>${user.username}</td><td>${user.totalAmount}</td></tr>`;
             leaderboardBody.insertAdjacentHTML('beforeend', row);
         });
       } catch (error) {

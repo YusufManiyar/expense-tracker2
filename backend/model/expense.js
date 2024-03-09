@@ -26,4 +26,16 @@ const Expense = sequelize.define('Expense', {
 User.hasMany(Expense, { foreignKey: 'userId' })
 Expense.belongsTo(User, { foreignKey: 'userId' });
 
+Expense.afterCreate(async (expense, options) => {
+  try {
+      const user = await User.findByPk(expense.userId);
+      const totalAmount = await Expense.sum('amount', { where: { userId: expense.userId } });
+      await user.update({ totalAmount });
+      console.log(`Total expense updated for user ${user.id}`);
+  } catch (error) {
+      console.error('Error updating total expense:', error);
+  }
+});
+
+
 module.exports = Expense;
