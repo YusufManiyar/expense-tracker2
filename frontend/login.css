@@ -57,3 +57,7 @@ body{
     transform: translateY(-50%);
     cursor: pointer;
   }
+
+  #forget{
+    padding: 1rem;
+  }

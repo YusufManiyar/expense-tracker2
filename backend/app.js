@@ -4,7 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { sequelize, User } = require('./model/user.js');
-const userRoute = require('./routes/user.js')
+const userRouter = require('./routes/user.js')
+const passwordRouter = require('./routes/password.js')
 const expenseRouter = require('./routes/expense.js')
 const purchaseRouter = require('./routes/purchase.js')
 const leaderboardRouter = require('./routes/leaderboard.js')
@@ -19,14 +20,13 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
-app.use('/', userRoute);
+app.use('/', userRouter);
+app.use('/password', passwordRouter);
 app.use('/', expenseRouter)
 app.use('/', purchaseRouter)
-// Assuming you have a User and Expense model with associations
 
 // Route to fetch leaderboard data
 app.use('/premium', leaderboardRouter)
-
 
 // Start server
 sequelize.sync({focus: true}).then(() => {
