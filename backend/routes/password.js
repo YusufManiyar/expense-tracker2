@@ -4,6 +4,7 @@ const autho = require('../middleware/autho.js')
 const router = express.Router()
 
 router.post('/forgetpassword', passwordController.forgetPassword)
-// router.post('/password/changePassword', autho.verifyToken, passwordController.changePassword)
+router.get('/resetpassword/:id', passwordController.resetPassword)
+router.post('/updatepassword', passwordController.updatePassword)
 
 module.exports = router
