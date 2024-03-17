@@ -35,26 +35,26 @@
     <div class="container">
         <div id="form-container">
         <h1>Expense Tracker</h1>
-        <div id="totalExpense"></div>
         <form id="expenseForm" mode="add">
-            <label for="description">Description:</label>
-            <input type="text" id="description" name="description" placeholder="Enter description" required>
-            <label for="category">Category:</label>
-            <select id="category" name="category" required>
-                <option value="Food">Food</option>
-                <option value="Petrol">Petrol</option>
-                <option value="Salary">Salary</option>
-                <option value="travelling">Travelling</option>
-                <option value="healthcare">Health Care</option>
-            </select>
-            <label for="amount">Amount:</label>
-            <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
-
+            <div id="form-input">
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" placeholder="Enter description" required>
+                <label for="category">Category:</label>
+                <select id="category" name="category" required>
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                </select>
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+            </div>
             <button type="submit">Add Expense</button>
         </form>
         </div>
         <div id="expenses">
-            <h2>Expense List</h2>
+            <div class="list-header">
+                <button onclick="window.location.href='dashboard.html'" id="dashbaord">Dashbaord</button>
+                <!-- <div id="totalExpense"></div> -->
+            </div>
             <hr class="divider">
             <div id="expense-list">
                 <ul id="expenseList"></ul>

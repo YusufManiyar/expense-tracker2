@@ -4,6 +4,7 @@ const autho = require('../middleware/autho.js')
 const router = express.Router()
 
 router.get('/expense',autho.verifyToken, expenseController.fetch)
+router.get('/expense/download',autho.verifyToken, expenseController.downloadCSV)
 router.post('/expense', autho.verifyToken, expenseController.add)
 router.put('/expense', autho.verifyToken, expenseController.update)
 router.delete('/expense', autho.verifyToken, expenseController.delete)

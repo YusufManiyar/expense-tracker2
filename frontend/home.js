@@ -35,10 +35,9 @@ if(localStorage.getItem('token') !== null){
     
     
     document.addEventListener("DOMContentLoaded", function() {
-        let totalExpenses = 0
+
         const expenseForm = document.getElementById('expenseForm');
         const expenseList = document.getElementById('expenseList');
-        const totalExpense = document.getElementById('totalExpense');
         const purchase = document.getElementById('purchase-button')
         const leaderboard = document.getElementById('leaderboard')
 
@@ -98,7 +97,6 @@ if(localStorage.getItem('token') !== null){
                 document.getElementById('description').value = '';
                 document.getElementById('category').value = '';
                 document.getElementById('amount').value = '';
-                // updateTotalExpense();
             } else {
                 alert('Please enter both description and amount.');
             }
@@ -114,10 +112,9 @@ if(localStorage.getItem('token') !== null){
                 <button class="edit-btn">Edit</button>
                 <button class="delete-btn">Delete</button>
             `;
-            updateTotalExpense(expense.amount)
             expenseList.appendChild(li);
         }
-    
+
         async function saveExpense(description, category, amount) {
             const mode = expenseForm.getAttribute('mode')
             let token = localStorage.getItem('token')
@@ -179,7 +176,6 @@ if(localStorage.getItem('token') !== null){
                 const amount = parseFloat(item.querySelector('span:nth-child(3)').textContent.slice(1));
                 deleteExpense(item.id);
                 item.remove();
-                updateTotalExpense(-amount);
             } else if (event.target.classList.contains('edit-btn')) {
                 const item = event.target.parentElement;
                 const description = item.querySelector('span:first-child').textContent;
@@ -202,7 +198,6 @@ if(localStorage.getItem('token') !== null){
             //   },
             //   body: JSON.stringify(list),
             // }).then(resp => console.log(resp.json()))
-            updateTotalExpense(-amount);
                 item.remove();
             }
         });
@@ -221,12 +216,7 @@ if(localStorage.getItem('token') !== null){
               body: JSON.stringify(idObj),
             })
         }
-    
-        function updateTotalExpense(amount) {
-            totalExpenses = amount + totalExpenses
-            totalExpense.textContent = `Total Expense: ₹${totalExpenses.toFixed(2)}`;
-        }
-        
+
     });
 
 }else{

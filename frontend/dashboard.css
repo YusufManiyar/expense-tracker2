@@ -1,0 +1,182 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background-color: #52bb9b;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+main {
+    padding: 20px 0;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+/* Stats box */
+#stats-box {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#stats-content {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/* Expense table */
+#expense-table {
+    min-height: 100%;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#expense-table th, #expense-table td {
+    /* border-top: 1px solid #ffffff; */
+    padding: 12px;
+    text-align: left;
+}
+
+#expense-table tr:nth-child(odd) {
+    background-color: white;
+}
+
+#expense-table th {
+    background-color: #d2ddda;
+    /* background-color: #f2f2f2; */
+}
+
+/* Download button */
+#download-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 0 auto;
+}
+
+#download-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Date filter */
+.date-filter {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.date-filter label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.date-filter input[type="date"] {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.date-filter button {
+    background-color: #52bb9b;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.date-filter button:hover {
+    background-color: #218838;
+}
+
+/* Styles from the previous response */
+
+#pagination {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#pagination button, #pagination input {
+    padding: 5px 10px;
+    border: none;
+    background-color: #52bb9b;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#pagination button:hover {
+    background-color: #45a049;
+}
+
+#pagination input {
+    width: 50px;
+    text-align: center;
+}
+
+#pagination label {
+    margin: 0 5px;
+}
+
+/* 
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pagination button:hover {
+    background-color: #0056b3;
+}
+
+#prev-btn:disabled,
+#next-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+} */
+
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    #expense-table {
+        font-size: 14px;
+    }
+}

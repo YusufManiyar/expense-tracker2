@@ -163,8 +163,31 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column; /* Change direction to column for better responsiveness */
+    align-items: center;
     height: 100vh;
-    overflow: hidden;
+    width: 100vw;
+    overflow: auto;
+}
+
+select, button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+.input-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: first baseline;
+    width:auto;
+    margin-bottom: 20px;
+}
+
+#time-range{
+    max-width: 20%;
 }
 
 .container {
@@ -173,9 +196,9 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     padding: 10px;
     width: 90%; /* Adjust width for responsiveness */
-    max-width: 450px; /* Set maximum width for large screens */
-    margin: auto;
-    height: 80vh;
+    max-width: 100vw; /* Set maximum width for large screens */
+    margin-bottom: 2rem;
+    height: 80%;
     overflow: hidden;
 }
 
@@ -188,6 +211,7 @@ h1 {
 form {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 label {
@@ -196,9 +220,17 @@ label {
     color: #555;
 }
 
+#form-input {
+    display: flex;
+    align-items: first baseline;
+    min-width: 80%;
+}
+
 input[type="text"],
 input[type="number"]{
     padding: 10px;
+    margin-left: 5px;
+    margin-right: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -208,6 +240,7 @@ input[type="number"]{
 select {
     padding: 10px;
     margin-bottom: 15px;
+    margin-right: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     width: 95%;
@@ -221,6 +254,7 @@ button {
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
+    max-width: 10rem;
 }
 
 button:hover {
@@ -232,9 +266,16 @@ h2 {
     margin-top: 10px; /* Add margin at the top */
 }
 
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
 #expense-list {
-    height: 100%; /* Make the list fill the container */
+    height: 64.5%; /* Make the list fill the container */
     overflow-y: auto; /* Add vertical scroll for overflow */
+    max-height: 100%;
 }
 
 hr.divider {
@@ -246,6 +287,7 @@ hr.divider {
 
 #expenses {
     margin-top: 20px;
+    height: 100%;
     flex: 1; /* Allow the expenses list to grow */
 }
 
@@ -308,7 +350,8 @@ span {
 nav {
     display: flex;
     justify-content: space-between;
-    max-width: 90%;
+    /* max-width: 90%; */
+    width: 90%;
 }
 
 #purchase-button {
@@ -335,3 +378,59 @@ nav {
 #premium-logo {
     margin-bottom: -12px;
 }
+
+/* Media query for smaller screens */
+@media screen and (max-width: 600px) {
+    body{
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        font-size: small;
+    }
+
+    li{
+        font-size: small;
+        justify-content: space-evenly;
+    }
+    .container {
+      width: 50%; /* Adjust width for smaller screens */
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #form-input {
+        display: flex;
+        flex-direction: column;
+        align-items: first baseline;
+        min-width: 80%;
+    }
+  
+    .input-container {
+        display: flex;
+      width: 100%; /* Adjust width for smaller screens */
+    }
+  
+    input[type="text"],
+    input[type="number"] {
+      width: 100%; /* Make input fields span full width on smaller screens */
+    }
+  
+    select {
+      width: 100%; /* Make select fields span full width on smaller screens */
+    }
+    button {
+        padding: 2px;
+        margin: 1px;
+        font-size: small;
+    }
+    
+    #logout-button {
+      margin: 1rem auto 2rem; /* Add more space below the button */
+    }
+  }
+  

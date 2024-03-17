@@ -1,5 +1,5 @@
 const User = require('../model/user.js')
-const ForgotPasswordRequest = require('../model/forgotpasswordrequest.js')
+const ForgotPasswordRequest = require('../model/ForgotPasswordRequest.js')
 const sequelize = require('../utils/data-config.js');
 
 const SibApiV3Sdk = require('sib-api-v3-sdk');
