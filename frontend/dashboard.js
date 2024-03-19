@@ -16,6 +16,13 @@ if(localStorage.getItem('token') !== null){
 
     }
 
+    document.getElementById('rowsPerPage').value = localStorage.getItem('rowsPerPage') || 10
+    document.getElementById('rowsPerPage').addEventListener('change', (e) => {
+        e.preventDefault()
+        localStorage.setItem('rowsPerPage', e.target.value)
+        handlePagination(1)
+    })
+
     let expenses = []
 
     let downloadBtn = document.getElementById('download-btn')
@@ -81,7 +88,7 @@ if(localStorage.getItem('token') !== null){
 
     // Function to handle pagination
     function handlePagination(pageNumber) {
-        const rowsPerPage = 10;
+        const rowsPerPage = Number(localStorage.getItem('rowsPerPage')) || 10;
         const startIndex = (pageNumber - 1) * rowsPerPage;
         const endIndex = startIndex + rowsPerPage;
         const totalPages = Math.ceil(expenses.length / rowsPerPage);
