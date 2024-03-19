@@ -86,6 +86,10 @@ if(localStorage.getItem('token') !== null){
         const endIndex = startIndex + rowsPerPage;
         const totalPages = Math.ceil(expenses.length / rowsPerPage);
 
+        if(pageNumber > totalPages || pageNumber < 1) {
+            return
+        }
+
         const tableBody = document.getElementById('expense-table-body');
         tableBody.innerHTML = ''; // Clear existing table data
 
@@ -181,6 +185,49 @@ if(localStorage.getItem('token') !== null){
     }
 
     handleFilter({})
+
+    const showPopupBtn = document.getElementById('showPopupBtn');
+const downloadPopup = document.getElementById('downloadPopup');
+const downloadList = document.getElementById('downloadList');
+
+// Function to open the popup
+function openPopup() {
+    downloadPopup.style.display = 'block';
+}
+
+// Function to close the popup
+function closePopup() {
+    downloadPopup.style.display = 'none';
+}
+
+// Function to show downloaded files in the popup
+function showDownloadedFiles(files) {
+    downloadList.innerHTML = '';
+    files.forEach(file => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<a href="${file.fileUrl}" target="_blank">${file.name}</a> (Downloaded on ${new Date(file.createdAt).toDateString()})`;
+        downloadList.appendChild(listItem);
+    });
+}
+
+// Event listener for the button to show the popup
+showPopupBtn.addEventListener('click', async () => {
+    const resp = await fetch('http://localhost:4000/showdownloadedfiles', { method: 'GET', headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }})
+
+    if(!resp.ok) {
+        const error = await resp.json()
+        throw error.message
+    }
+
+    const files = await resp.json()
+
+    showDownloadedFiles(files);
+    openPopup();
+});
+
 
 }
 else {

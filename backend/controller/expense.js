@@ -3,6 +3,7 @@ const Expense = require('../model/expense.js')
 const User = require('../model/user.js')
 const sequelize = require('../utils/data-config.js');
 const AWS = require('aws-sdk');
+const DownloadRequest = require('../model/downloadRequest.js');
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
@@ -153,15 +154,18 @@ let totalExpense=0, totalIncome=0
   let savings = totalIncome - totalExpense
   csvContent += `\n\n\n\nTotal Expense,${totalExpense}\nTotal Income,${totalIncome}\nTotal Savings,${savings}\n`
 
+  let filename = `expense${expenses[0].userId}_${new Date().toDateString()}.csv`
   const uploadParams = {
     Bucket: 'user-expense-data',
-    Key: 'expense.csv',
+    Key: filename,
     Body: csvContent,
     ACL: 'public-read'
   };
 
   // Upload the file to S3
   const data = await s3.upload(uploadParams).promise()
+  console.log(data)
+  await DownloadRequest.create({name: filename, fileUrl: data.Location, userId: expenses[0]?.userId})
   return data.Location
   }
   catch(error) {

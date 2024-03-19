@@ -2,6 +2,7 @@ const User = require('../model/user.js');
 const jwt = require('jsonwebtoken')
 
 const bcrypt = require('bcrypt');
+const DownloadRequest = require('../model/downloadRequest.js');
 
 // Function to hash a password
 async function hashPassword(password) {
@@ -53,4 +54,13 @@ module.exports = {
           res.status(400).json({ message: error.message });
         }
     },
+
+    getDownloadLogs: async (req, res, next) => {
+      try {
+        const downloadRequestLogs = await DownloadRequest.findAll({where : {userId : req.user.id}})
+        res.status(200).json(downloadRequestLogs)
+      } catch (error) {
+        res.status(400).json({ message: error.toString() });
+      }
+  },
 }
