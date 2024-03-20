@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const helmet = require('helmet');
 const { sequelize, User } = require('./model/user.js');
 const userRouter = require('./routes/user.js')
 const passwordRouter = require('./routes/password.js')
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+app.use(helmet());
 app.use(express.json());
 
 // Routes
