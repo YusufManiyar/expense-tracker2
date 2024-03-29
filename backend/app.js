@@ -10,6 +10,7 @@ const passwordRouter = require('./routes/password.js')
 const expenseRouter = require('./routes/expense.js')
 const purchaseRouter = require('./routes/purchase.js')
 const leaderboardRouter = require('./routes/leaderboard.js')
+const compression = require('compression')
 
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 app.use(helmet());
+app.use(compression())
 app.use(express.json());
 
 // Routes
