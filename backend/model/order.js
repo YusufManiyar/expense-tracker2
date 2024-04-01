@@ -22,6 +22,6 @@ const Order = sequelize.define('Order', {
 });
 
 User.hasMany(Order)
-Order.belongsTo(User, { foreignKey: 'userId' });
+Order.belongsTo(User, { foreignKey: 'UserId' });
 
 module.exports = Order;

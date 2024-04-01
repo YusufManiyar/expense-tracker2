@@ -45,7 +45,7 @@ if(localStorage.getItem('token') !== null){
 
         purchase.addEventListener('click', async function(event) {
             const token = localStorage.getItem('token')
-            const response = await fetch('http://localhost:4000/purchase/premiummembership', {headers: {
+            const response = await fetch('http://65.1.112.239:4000/purchase/premiummembership', {headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
               }
@@ -55,7 +55,7 @@ if(localStorage.getItem('token') !== null){
                 key_id: data.key_id,
                 order_id: data.order.id,
                 handler: async function(response) {
-                    const resp = await fetch('http://localhost:4000/purchase/updatetransationstatus', {method:'POST', headers: {
+                    const resp = await fetch('http://65.1.112.239:4000/purchase/updatetransationstatus', {method:'POST', headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                       },
@@ -126,7 +126,7 @@ if(localStorage.getItem('token') !== null){
 
             let data
             if(mode == 'add') {
-                const response = await fetch('http://localhost:4000/expense', {method: 'POST', headers: {
+                const response = await fetch('http://65.1.112.239:4000/expense', {method: 'POST', headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                   },
@@ -140,7 +140,7 @@ if(localStorage.getItem('token') !== null){
                 expenseForm.removeAttribute('transactionId')
                 expenseForm.setAttribute('mode', 'add')
 
-                const response = await fetch('http://localhost:4000/expense', {method: 'PUT', headers: {
+                const response = await fetch('http://65.1.112.239:4000/expense', {method: 'PUT', headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                   },
@@ -154,7 +154,7 @@ if(localStorage.getItem('token') !== null){
         }
         function loadExpenses() {
 
-            fetch(`http://localhost:4000/expense`, {method: 'GET', headers: {
+            fetch(`http://65.1.112.239:4000/expense`, {method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               },
@@ -193,7 +193,7 @@ if(localStorage.getItem('token') !== null){
             //         description: item.description,
             //         amount: item.amount
             //     }
-            //     fetch('http://localhost:4000/expense', {method: 'PUT', headers: {
+            //     fetch('http://65.1.112.239:4000/expense', {method: 'PUT', headers: {
             //     'Content-Type': 'application/json'
             //   },
             //   body: JSON.stringify(list),
@@ -209,7 +209,7 @@ if(localStorage.getItem('token') !== null){
             }
             // let amount = parseFloat(document.getElementById('amountValue').textContent.slice(1))
     
-            fetch(`http://localhost:4000/expense`, {method: 'DELETE', headers: {
+            fetch(`http://65.1.112.239:4000/expense`, {method: 'DELETE', headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
               },

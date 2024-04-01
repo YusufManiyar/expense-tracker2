@@ -32,6 +32,10 @@ app.use('/', purchaseRouter)
 // Route to fetch leaderboard data
 app.use('/premium', leaderboardRouter)
 
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, `public/frontend/${req.url}`))
+})
+
 // Start server
 sequelize.sync({focus: true}).then(() => {
   app.listen(PORT, () => {
