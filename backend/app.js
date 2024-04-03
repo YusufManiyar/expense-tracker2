@@ -33,7 +33,8 @@ app.use('/', purchaseRouter)
 app.use('/premium', leaderboardRouter)
 
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, `public/frontend/${req.url}`))
+  console.log(req.url)
+  res.sendFile(path.join(__dirname, `./public/frontend/${req.url}`))
 })
 
 // Start server
