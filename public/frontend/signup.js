@@ -23,7 +23,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
           alert(data.message)
         } else if(res.ok) {
           alert("User Create Successfully")
-          window.location.href= 'home.html'
+          window.location.href= 'index.html'
         }
       })
     } catch (error) {

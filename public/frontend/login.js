@@ -22,7 +22,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       localStorage.setItem('token', token )
       localStorage.setItem('premiumActive', ispremiumactive )
       if(response.ok){
-        window.location.href= 'home.html'
+        window.location.href= 'index.html'
       }
       // }
     } catch (error) {
