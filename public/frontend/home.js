@@ -222,6 +222,5 @@ if(localStorage.getItem('token') !== null){
     });
 
 }else{
-    alert('user not found please logIn.')
     window.location.href = 'login.html'
 }
