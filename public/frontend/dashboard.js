@@ -3,7 +3,7 @@ import config from './config.js'
 
 if(localStorage.getItem('token') !== null){
     
-    document.getElementsByClassName('close').addEventListener('click', closePopup)
+    document.getElementById('close').addEventListener('click', closePopup)
 
     document.getElementById('home-btn').addEventListener('click', (e) => window.location.href = 'index.html')
 
