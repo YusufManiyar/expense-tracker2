@@ -32,7 +32,6 @@ module.exports = {
         try {
             const userId = req.user.id
             const query = req.query
-          console.log(query)
             const matchParams = {
               userId
             }
@@ -47,7 +46,6 @@ module.exports = {
               dateFilter[Op.lte] = new Date(query.endDate + 'T23:59:59.999Z')
               matchParams.createdAt = dateFilter
             }
-            console.log(matchParams)
             const expenses = await Expense.findAll({
                 where: matchParams
             });

@@ -1,4 +1,5 @@
 // Sample data for demonstration purposes
+import config from './config.js'
 
 if(localStorage.getItem('token') !== null){
     
@@ -73,7 +74,7 @@ if(localStorage.getItem('token') !== null){
 
 
         `s&&endDate=${filter.endDate}`
-        const resp = await fetch(`http://65.1.112.239:4000/expense?${query}`, {method: 'GET', headers: {
+        const resp = await fetch(`${config.BACKEND_URL}/expense?${query}`, {method: 'GET', headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -171,9 +172,7 @@ if(localStorage.getItem('token') !== null){
             query = startQuery + '&&' + endQuery
         }
 
-
-        `s&&endDate=${endDate}`
-        const resp = await fetch(`http://65.1.112.239:4000/expense/download?${query}`, {method: 'GET', headers: {
+        const resp = await fetch(`${config.BACKEND_URL}/expense/download?${query}`, {method: 'GET', headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -219,7 +218,7 @@ function showDownloadedFiles(files) {
 
 // Event listener for the button to show the popup
 showPopupBtn.addEventListener('click', async () => {
-    const resp = await fetch('http://65.1.112.239:4000/showdownloadedfiles', { method: 'GET', headers: {
+    const resp = await fetch(`${config.BACKEND_URL}/showdownloadedfiles`, { method: 'GET', headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
     }})

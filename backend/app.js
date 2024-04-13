@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path')
 const helmet = require('helmet');
 const { sequelize, User } = require('./model/user.js');
 const userRouter = require('./routes/user.js')

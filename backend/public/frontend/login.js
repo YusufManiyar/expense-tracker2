@@ -1,4 +1,6 @@
 // script.js
+import config from './config.js'
+
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
   
@@ -7,7 +9,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const password = formData.get('password');
   
     try {
-      const response = await fetch('http://65.1.112.239:4000/login', {
+      const response = await fetch(`${config.BACKEND_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

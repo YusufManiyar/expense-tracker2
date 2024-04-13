@@ -70,13 +70,15 @@ button:hover {
     </tbody>
   </table>
 
-  <script>
+  <script type="module">
+    import config from './config.js'
+
     document.getElementById('show-leaderboard')
         const token = localStorage.getItem("token")
 
         async function show() {
             try {
-        const response = await fetch('http://65.1.112.239:4000/premium/leaderboard', {headers: {
+        const response = await fetch(`${config.BACKEND_URL}/premium/leaderboard`, {headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
               }

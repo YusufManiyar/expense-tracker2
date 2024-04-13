@@ -88,7 +88,7 @@ module.exports = {
                 const formData = new FormData(event.target); // Get form data
                 const password = formData.get('password'); // Get password from form data
     
-                const apiUrl = 'http://localhost:4000/password/updatepassword';
+                const apiUrl = '${config.BACKEND_URL}/password/updatepassword';
     
                 try {
                     const response = await fetch(apiUrl, {
