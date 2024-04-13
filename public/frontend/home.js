@@ -10,6 +10,9 @@ logout.addEventListener('click', function(){
 
 if(localStorage.getItem('token') !== null){
     
+    document.getElementById('dashboard').addEventListener('click', (e) => {
+        window.location.href='dashboard.html'
+    })
 
     function ispremium() {
         const premiumActive = localStorage.getItem('premiumActive');

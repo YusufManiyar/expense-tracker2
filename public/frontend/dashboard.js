@@ -3,6 +3,10 @@ import config from './config.js'
 
 if(localStorage.getItem('token') !== null){
     
+    document.getElementsByClassName('close').addEventListener('click', closePopup)
+
+    document.getElementById('home-btn').addEventListener('click', (e) => window.location.href = 'index.html')
+
     const premiumActive = localStorage.getItem('premiumActive')
     if (premiumActive === 'false') {
         document.getElementById('download-btn').setAttribute('disabled', 'true')
