@@ -45,7 +45,7 @@ module.exports = {
               email: email
             }],
             "subject":"Reset Password",
-            "htmlContent":`<html><head></head><body><p>You recently requested to reset your password for your account. Click the link below to reset it. If you didn't request this, you can ignore this email. </p><br><a href='http://localhost:4000/password/resetpassword/${forgotPasswordRequest.id}'>http://localhost:4000/password/resetpassword/${forgotPasswordRequest.id}</a></body></html>`,
+            "htmlContent":`<html><head></head><body><p>You recently requested to reset your password for your account. Click the link below to reset it. If you didn't request this, you can ignore this email. </p><br><a href='https://expense-tracker.osc-fr1.scalingo.io/password/resetpassword/${forgotPasswordRequest.id}'>https://expense-tracker.osc-fr1.scalingo.io/password/resetpassword/${forgotPasswordRequest.id}</a></body></html>`,
             headers: {
               'X-Mailin-custom': 'custom_header_1:custom_value_1|custom_header_2:custom_value_2'
             }
