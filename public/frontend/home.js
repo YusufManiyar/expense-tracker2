@@ -1,5 +1,32 @@
 import config from './config.js'
 
+// let loadExternalScript = function(path) {
+//     var result = $.Deferred(),
+//         script = document.createElement("script");
+
+//     script.async = "async";
+//     script.type = "text/javascript";
+//     script.src = path;
+//     script.onload = script.onreadystatechange = function(_, isAbort) {
+//       if (!script.readyState || /loaded|complete/.test(script.readyState)) {
+//         if (isAbort)
+//           result.reject();
+//         else
+//           result.resolve();
+//       }
+//     };
+
+//     script.onerror = function() {
+//       result.reject();
+//     };
+
+//     $("head")[0].appendChild(script);
+
+//     return result.promise();
+// };
+
+// loadExternalScript('https://checkout.razorpay.com/v1/checkout.js')
+
 const logout = document.getElementById('logout-button');
 logout.addEventListener('click', function(){
     window.location.href = 'login.html'
@@ -86,7 +113,6 @@ if(localStorage.getItem('token') !== null){
             rzp.on('payment.failed', (response)=> {
                 alert('Payment failed! Please try again')
             })
-
         })
     
         expenseForm.addEventListener('submit', async function(event) {

@@ -33,6 +33,11 @@ app.use('/', purchaseRouter)
 // Route to fetch leaderboard data
 app.use('/premium', leaderboardRouter)
 
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', "script-src 'self' https://checkout.razorpay.com");
+  next();
+});
+
 app.use((req, res) => {
   console.log(req.url)
   res.sendFile(path.join(__dirname, `./public/frontend/${req.url}`))
