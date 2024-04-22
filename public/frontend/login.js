@@ -45,3 +45,14 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       eyeIcon.classList.add('fa-eye');
     }
   });
+
+  document.getElementById("myLink").addEventListener("click", function(event) {
+    event.preventDefault(); 
+    window.location.href = 'signup.html'
+  });
+
+  document.getElementById("forget").addEventListener("click", function(event) {
+    event.preventDefault(); 
+    window.location.href = 'forgetPassword.html'
+  });
+  

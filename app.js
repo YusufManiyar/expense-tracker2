@@ -1,5 +1,5 @@
 // server.js
-// require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -34,7 +34,7 @@ app.use('/', purchaseRouter)
 app.use('/premium', leaderboardRouter)
 
 app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy', "script-src 'self' https://checkout.razorpay.com");
+  res.setHeader('Content-Security-Policy', "script-src 'self' *");
   next();
 });
 

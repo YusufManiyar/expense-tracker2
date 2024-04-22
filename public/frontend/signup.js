@@ -45,6 +45,11 @@ document.getElementById('togglePassword').addEventListener('click', () => {
       eyeIcon.classList.add('fa-eye');
     }
   });
+
+  document.getElementById("myLink").addEventListener("click", function(event) {
+    event.preventDefault(); 
+    window.location.href = 'login.html'
+  });
   
   
   
