@@ -26,7 +26,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       }
       // }
     } catch (error) {
-       alert(error)
+       alert(error.message)
       console.error('Error:', error);
     }
   });
