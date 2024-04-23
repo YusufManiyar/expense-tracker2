@@ -15,7 +15,7 @@ const compression = require('compression')
 
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
