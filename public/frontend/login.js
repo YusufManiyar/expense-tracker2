@@ -1,4 +1,3 @@
-// script.js
 import config from './config.js'
 
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -18,13 +17,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       });
 
       const { token, ispremiumactive } = await response.json()
-      // const data = await response.json();
+
       localStorage.setItem('token', token )
       localStorage.setItem('premiumActive', ispremiumactive )
       if(response.ok){
         window.location.href= 'index.html'
       }
-      // }
     } catch (error) {
        alert(error.message)
       console.error('Error:', error);
