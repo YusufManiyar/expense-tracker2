@@ -11,9 +11,6 @@ module.exports = {
           order: [['totalAmount', 'DESC']]
          });
 
-          // Convert leaderboard object to an array for sorting
-          // const sortedLeaderboard = totalExpensesByUsers.sort((a, b) => b.totalExpense - a.totalExpense);
-      
           res.json(totalExpensesByUsers);
         } catch (error) {
           console.error('Error fetching leaderboard:', error);

@@ -44,7 +44,6 @@ module.exports = {
           if (match) {
             // Successful login
             req.body = {id: user.id, ispremiumactive: user.ispremiumactive}
-            // res.json(user)
             next()
           } else {
             // Invalid credentials

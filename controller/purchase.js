@@ -12,16 +12,12 @@ module.exports = {
 
            const amount = 2500
 
-           rzp.orders.create({amount, currency: 'INR'}, async (err, order) => {
+           const order = await rzp.orders.create({amount, currency: 'INR'})
 
-            if(err) {
-                console.log('err=> ',err)
-                throw new Error(JSON.stringify(err))
-            }
             await req.user.createOrder({orderid: order.id, status: 'PENDING'})
             return res.status(201).json({order, key_id: rzp.key_id})
-           })
         } catch (error) {
+            console.log(error)
             res.status(500).json({ message: error.toString() });
         }
     },

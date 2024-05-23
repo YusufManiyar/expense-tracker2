@@ -1,38 +1,9 @@
 import config from './config.js'
 
-// let loadExternalScript = function(path) {
-//     var result = $.Deferred(),
-//         script = document.createElement("script");
-
-//     script.async = "async";
-//     script.type = "text/javascript";
-//     script.src = path;
-//     script.onload = script.onreadystatechange = function(_, isAbort) {
-//       if (!script.readyState || /loaded|complete/.test(script.readyState)) {
-//         if (isAbort)
-//           result.reject();
-//         else
-//           result.resolve();
-//       }
-//     };
-
-//     script.onerror = function() {
-//       result.reject();
-//     };
-
-//     $("head")[0].appendChild(script);
-
-//     return result.promise();
-// };
-
-// loadExternalScript('https://checkout.razorpay.com/v1/checkout.js')
-
 const logout = document.getElementById('logout-button');
 logout.addEventListener('click', function(){
     window.location.href = 'login.html'
     localStorage.clear()
-    // localStorage.removeItem('token')
-    // localStorage.removeItem('premiumActive')
 })
 
 if(localStorage.getItem('token') !== null){
@@ -123,7 +94,6 @@ if(localStorage.getItem('token') !== null){
             const amount = parseFloat(document.getElementById('amount').value);
     
             if (description.trim() && category && amount) {
-                // addExpense(description, amount);
                 await saveExpense(description, category, amount);
                 document.getElementById('description').value = '';
                 document.getElementById('category').value = '';
@@ -184,7 +154,7 @@ if(localStorage.getItem('token') !== null){
 
         }
         function loadExpenses() {
-
+            
             fetch(`${config.BACKEND_URL}/expense`, {method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -195,6 +165,7 @@ if(localStorage.getItem('token') !== null){
                 addExpense({id: expense.id, description: expense.description,category: expense.category, amount: expense.amount});
                 localStorage.setItem('premiumActive', data.isPremiumActive)
             })})
+            .catch(error => console.log(error))
         }
     
         ispremium()
@@ -203,7 +174,6 @@ if(localStorage.getItem('token') !== null){
         expenseList.addEventListener('click', function(event) {
             if (event.target.classList.contains('delete-btn')) {
                 const item = event.target.parentElement;
-                // const description = item.querySelector('span:first-child').textContent;
                 const amount = parseFloat(item.querySelector('span:nth-child(3)').textContent.slice(1));
                 deleteExpense(item.id);
                 item.remove();
@@ -218,17 +188,6 @@ if(localStorage.getItem('token') !== null){
                 expenseForm.setAttribute('transactionId', item.id)
                 expenseForm.setAttribute('mode', 'update')
 
-            //     const list = {
-            //         userid: userid,
-            //         id: item.id,
-            //         description: item.description,
-            //         amount: item.amount
-            //     }
-            //     fetch('expense', {method: 'PUT', headers: {
-            //     'Content-Type': 'application/json'
-            //   },
-            //   body: JSON.stringify(list),
-            // }).then(resp => console.log(resp.json()))
                 item.remove();
             }
         });
@@ -238,8 +197,7 @@ if(localStorage.getItem('token') !== null){
             const idObj = {
                 id: id,
             }
-            // let amount = parseFloat(document.getElementById('amountValue').textContent.slice(1))
-    
+
             fetch(`${config.BACKEND_URL}/expense`, {method: 'DELETE', headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`

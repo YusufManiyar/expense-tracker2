@@ -1,4 +1,3 @@
-// Sample data for demonstration purposes
 import config from './config.js'
 
 if(localStorage.getItem('token') !== null){
