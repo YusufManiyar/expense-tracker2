@@ -154,7 +154,7 @@ if(localStorage.getItem('token') !== null){
 
         }
         function loadExpenses() {
-
+            
             fetch(`${config.BACKEND_URL}/expense`, {method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -165,6 +165,7 @@ if(localStorage.getItem('token') !== null){
                 addExpense({id: expense.id, description: expense.description,category: expense.category, amount: expense.amount});
                 localStorage.setItem('premiumActive', data.isPremiumActive)
             })})
+            .catch(error => console.log(error))
         }
     
         ispremium()
