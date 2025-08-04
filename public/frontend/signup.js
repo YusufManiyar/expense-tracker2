@@ -10,7 +10,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     const password = formData.get('password');
   
     try {
-      const response = await fetch(`${config.BACKEND_URL}/signup`, {
+      const response = await fetch(`${config.BACKEND_URL}/user/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

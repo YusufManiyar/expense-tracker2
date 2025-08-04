@@ -1,19 +1,45 @@
-const { DataTypes } = require('sequelize');
-const User = require('./user.js')
-const sequelize = require('../utils/data-config.js'); // Assuming you have configured Sequelize
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const DownloadRequest = sequelize.define('DownloadRequest', {
+const downloadRequestSchema = new Schema({
   fileUrl: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   name: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User', // references User model
+    required: true
   }
-});
+}, { timestamps: true });
 
-User.hasMany(DownloadRequest, { foreignKey: 'userId' })
-DownloadRequest.belongsTo(User, { foreignKey: 'userId' })
+module.exports = mongoose.model('DownloadRequest', downloadRequestSchema);
 
-module.exports = DownloadRequest;
+
+
+
+
+
+// const { DataTypes } = require('sequelize');
+// const User = require('./user.js')
+// const sequelize = require('../utils/data-config.js'); // Assuming you have configured Sequelize
+
+// const DownloadRequest = sequelize.define('DownloadRequest', {
+//   fileUrl: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   name: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   }
+// });
+
+// User.hasMany(DownloadRequest, { foreignKey: 'userId' })
+// DownloadRequest.belongsTo(User, { foreignKey: 'userId' })
+
+// module.exports = DownloadRequest;

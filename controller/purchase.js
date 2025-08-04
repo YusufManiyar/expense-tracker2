@@ -1,36 +1,104 @@
-const Expense = require('../model/expense.js')
-const Razorpay = require('razorpay')
-const Order = require('../model/order.js')
+const Razorpay = require('razorpay');
+const Order = require('../model/order');
+const User = require('../model/user'); // For updating user if needed
 
 module.exports = {
-    purchase : async (req, res) => {
-        try {
-           let rzp = new Razorpay({
-            key_id: process.env.RAZORPAY_ID || 'rzp_test_AYcdF49UVvPrAR',
-            key_secret: process.env.RAZORPAY_KEY_SECRET || 'KW1JRjFKrCsLsx2NJCrFSHia'
-           })
+  purchase: async (req, res) => {
+    try {
+      const rzp = new Razorpay({
+        key_id: process.env.RAZORPAY_ID || 'rzp_test_AYcdF49UVvPrAR',
+        key_secret: process.env.RAZORPAY_KEY_SECRET || 'KW1JRjFKrCsLsx2NJCrFSHia'
+      });
 
-           const amount = 2500
+      const amount = 2500;
 
-           const order = await rzp.orders.create({amount, currency: 'INR'})
+      const order = await rzp.orders.create({ amount, currency: 'INR' });
 
-            await req.user.createOrder({orderid: order.id, status: 'PENDING'})
-            return res.status(201).json({order, key_id: rzp.key_id})
-        } catch (error) {
-            console.log(error)
-            res.status(500).json({ message: error.toString() });
-        }
-    },
+      const newOrder = new Order({
+        orderid: order.id,
+        status: 'PENDING',
+        user: req.user.id // Mongoose ObjectId
+      });
 
-    updateTransactionStatus :async (req, res) => {
-        try {
-            const { payment_id, order_id } = req.body;
-            const order = await Order.findOne({where: {orderid : order_id}})
-            await Promise.all([order.update({paymentid: payment_id, status: 'SUCCESSFUL'}), req.user.update({ispremiumactive: true})])
-            res.status(202).json({success: true, message: 'Transaction Successful', isPremiumActive: req.user.ispremiumactive});
-        } catch (error) {
-            console.log("err=>",error)
-            res.status(400).json({ message: error.toString() });
-        }
+      await newOrder.save();
+
+      return res.status(201).json({ order, key_id: rzp.key_id });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: error.toString() });
     }
-}
+  },
+
+  updateTransactionStatus: async (req, res) => {
+    try {
+      const { payment_id, order_id } = req.body;
+
+      const order = await Order.findOne({ orderid: order_id });
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+
+      // Update order status and payment ID
+      order.paymentid = payment_id;
+      order.status = 'SUCCESSFUL';
+      await order.save();
+
+      // Update user premium status
+      const user = await User.findById(order.user);
+      user.ispremiumactive = true;
+      await user.save();
+
+      res.status(202).json({
+        success: true,
+        message: 'Transaction Successful',
+        isPremiumActive: user.ispremiumactive
+      });
+    } catch (error) {
+      console.log('err =>', error);
+      res.status(400).json({ message: error.toString() });
+    }
+  }
+};
+
+
+
+
+
+
+
+// const Expense = require('../model/expense.js')
+// const Razorpay = require('razorpay')
+// const Order = require('../model/order.js')
+
+// module.exports = {
+//     purchase : async (req, res) => {
+//         try {
+//            let rzp = new Razorpay({
+//             key_id: process.env.RAZORPAY_ID || 'rzp_test_AYcdF49UVvPrAR',
+//             key_secret: process.env.RAZORPAY_KEY_SECRET || 'KW1JRjFKrCsLsx2NJCrFSHia'
+//            })
+
+//            const amount = 2500
+
+//            const order = await rzp.orders.create({amount, currency: 'INR'})
+
+//             await req.user.createOrder({orderid: order.id, status: 'PENDING'})
+//             return res.status(201).json({order, key_id: rzp.key_id})
+//         } catch (error) {
+//             console.log(error)
+//             res.status(500).json({ message: error.toString() });
+//         }
+//     },
+
+//     updateTransactionStatus :async (req, res) => {
+//         try {
+//             const { payment_id, order_id } = req.body;
+//             const order = await Order.findOne({where: {orderid : order_id}})
+//             await Promise.all([order.update({paymentid: payment_id, status: 'SUCCESSFUL'}), req.user.update({ispremiumactive: true})])
+//             res.status(202).json({success: true, message: 'Transaction Successful', isPremiumActive: req.user.ispremiumactive});
+//         } catch (error) {
+//             console.log("err=>",error)
+//             res.status(400).json({ message: error.toString() });
+//         }
+//     }
+// }

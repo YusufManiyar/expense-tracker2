@@ -1,31 +1,63 @@
-// models/user.js
-const { DataTypes } = require('sequelize');
-const sequelize = require('../utils/data-config.js')
+const mongoose = require('mongoose');
 
-const User = sequelize.define('User', {
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
   username: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   email: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: String,
+    required: true,
     unique: true
   },
   password: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   ispremiumactive: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false
+    type: Boolean,
+    default: false
   },
   totalAmount: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    defaultValue: 0
+    type: Number,
+    default: 0
   }
 });
 
+exports.User = mongoose.model('User', userSchema);
 
-module.exports = User;
+
+
+// // models/user.js
+// const { DataTypes } = require('sequelize');
+// const sequelize = require('../utils/data-config.js')
+
+// const User = sequelize.define('User', {
+//   username: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   email: {
+//     type: DataTypes.STRING,
+//     allowNull: false,
+//     unique: true
+//   },
+//   password: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   ispremiumactive: {
+//     type: DataTypes.BOOLEAN,
+//     defaultValue: false
+//   },
+//   totalAmount: {
+//     type: DataTypes.INTEGER,
+//     allowNull: false,
+//     defaultValue: 0
+//   }
+// });
+
+
+// module.exports = User;
